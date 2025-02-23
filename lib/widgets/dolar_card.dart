@@ -8,6 +8,11 @@ class DolarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color variacaoColor =
+        (dolar.variacao ?? 0) >= 0 ? Colors.green : Colors.red;
+    final String variacaoSymbol =
+        (dolar.variacao ?? 0) >= 0 ? '+' : '-';
+
     return Card(
       elevation: 10,
       shape: RoundedRectangleBorder(
@@ -17,7 +22,7 @@ class DolarCard extends StatelessWidget {
         width: double.infinity, 
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center, 
           children: [
             const Text(
               'Dólar',
@@ -41,9 +46,11 @@ class DolarCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Variação: ${dolar.variacao?.toStringAsFixed(2) ?? 'N/A'}%',
-              style: const TextStyle(
+              'Variação: $variacaoSymbol${dolar.variacao?.toStringAsFixed(2) ?? 'N/A'}%',
+              style: TextStyle(
                 fontSize: 16,
+                color: variacaoColor, 
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
