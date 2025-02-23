@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ErrorWidget extends StatelessWidget {
+class CustomErrorWidget extends StatelessWidget {
   final String message;
 
-  const ErrorWidget({super.key, required this.message});
+  const CustomErrorWidget({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {

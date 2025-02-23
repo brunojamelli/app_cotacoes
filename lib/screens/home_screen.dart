@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 import '../models/cotacao.dart';
 import '../models/bolsa.dart';
-import '../widgets/cotacao_card.dart';
-import '../widgets/bolsa_card.dart';
+import '../widgets/moedas_section.dart';
+import '../widgets/bolsas_section.dart';
+import '../widgets/loading_widget.dart';
+import '../widgets/custom_error_widget.dart'; // Importação atualizada
 
 class HomeScreen extends StatefulWidget {
   final ApiService apiService;
@@ -51,14 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
         future: dadosFinanceiros,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
+            return const LoadingWidget();
           }
           if (snapshot.hasError) {
-            return Center(
-              child: Text(snapshot.error.toString()),
-            );
+            return CustomErrorWidget(message: snapshot.error.toString()); // Uso atualizado
           }
 
           final cotacoes = snapshot.data!['cotacoes'] as List<Cotacao>;
@@ -68,36 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(16.0),
             child: ListView(
               children: [
-                const Text(
-                  'Cotações de Moedas',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: cotacoes
-                        .map((cotacao) => CotacaoCard(cotacao: cotacao))
-                        .toList(),
-                  ),
-                ),
+                MoedasSection(cotacoes: cotacoes),
                 const SizedBox(height: 20),
-                const Text(
-                  'Bolsas de Valores',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Column(
-                  children: bolsas
-                      .map((bolsa) => BolsaCard(bolsa: bolsa))
-                      .toList(),
-                ),
+                BolsasSection(bolsas: bolsas),
               ],
             ),
           );
