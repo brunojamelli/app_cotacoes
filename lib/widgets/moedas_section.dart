@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/cotacao.dart';
 import 'cotacao_card.dart';
+import 'dolar_card.dart';
 
 class MoedasSection extends StatelessWidget {
   final List<Cotacao> cotacoes;
@@ -9,6 +10,21 @@ class MoedasSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Encontra a cotação do dolar
+    final dolar = cotacoes.firstWhere(
+      (cotacao) => cotacao.codigo == 'USD',
+      orElse: () => Cotacao(
+        codigo: 'USD',
+        nome: 'Dólar',
+        compra: 0.0,
+        venda: 0.0,
+        variacao: 0.0,
+      ),
+    );
+
+    // Filtra as outras moedas
+    final outrasMoedas = cotacoes.where((cotacao) => cotacao.codigo != 'USD').toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -20,10 +36,12 @@ class MoedasSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
+        DolarCard(dolar: dolar), 
+        const SizedBox(height: 20),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: cotacoes
+            children: outrasMoedas
                 .map((cotacao) => CotacaoCard(cotacao: cotacao))
                 .toList(),
           ),
