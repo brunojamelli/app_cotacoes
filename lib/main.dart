@@ -90,8 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
           }
 
           final dados = snapshot.data!['results'];
-          final moedas = dados['currencies'];
-          final bolsas = dados['stocks'];
+          final moedas = dados['currencies'] as Map<String, dynamic>;
+          final bolsas = dados['stocks'] as Map<String, dynamic>;
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     children: moedas.entries
                         .where((entry) => entry.key != 'source')
-                        .map((entry) {
+                        .map<Widget>((entry) { // Especificamos o tipo de retorno como Widget
                           final codigo = entry.key;
                           final detalhes = entry.value;
                           return Card(
@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           );
-                        }).toList(), // Correção aqui
+                        }).toList(), // Convertemos para List<Widget>
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -167,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 8),
                 Column(
-                  children: bolsas.entries.map((entry) {
+                  children: bolsas.entries.map<Widget>((entry) { // Especificamos o tipo de retorno como Widget
                     final codigo = entry.key;
                     final detalhes = entry.value;
                     return Card(
@@ -208,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     );
-                  }).toList(), // Correção aqui
+                  }).toList(), // Convertemos para List<Widget>
                 ),
               ],
             ),
