@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/bolsa.dart';
+import '../utils/variacao_utils.dart'; 
 
 class BolsaCard extends StatelessWidget {
   final Bolsa bolsa;
@@ -8,10 +9,12 @@ class BolsaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final variacaoStyle = VariacaoUtils.getVariacaoStyle(bolsa.variacao);
+
     return Card(
       elevation: 6,
       child: Container(
-        width: 150, // Largura fixa para o card
+        width: 150, 
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -41,9 +44,10 @@ class BolsaCard extends StatelessWidget {
               ),
             ),
             Text(
-              'Variação: ${bolsa.variacao?.toStringAsFixed(2) ?? 'N/A'}%',
-              style: const TextStyle(
+              'Variação: ${variacaoStyle['symbol']}${bolsa.variacao?.toStringAsFixed(2) ?? 'N/A'}%',
+              style: TextStyle(
                 fontSize: 14,
+                color: variacaoStyle['color'], 
               ),
             ),
           ],

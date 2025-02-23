@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/cotacao.dart';
+import '../utils/variacao_utils.dart'; 
 
 class CotacaoCard extends StatelessWidget {
   final Cotacao cotacao;
@@ -8,6 +9,8 @@ class CotacaoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final variacaoStyle = VariacaoUtils.getVariacaoStyle(cotacao.variacao);
+
     return Card(
       elevation: 6,
       child: Container(
@@ -40,9 +43,10 @@ class CotacaoCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Variação: ${cotacao.variacao?.toStringAsFixed(2) ?? 'N/A'}%',
-              style: const TextStyle(
+              'Variação: ${variacaoStyle['symbol']}${cotacao.variacao?.toStringAsFixed(2) ?? 'N/A'}%',
+              style: TextStyle(
                 fontSize: 12,
+                color: variacaoStyle['color'], 
               ),
             ),
           ],
