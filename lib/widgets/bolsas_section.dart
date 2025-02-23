@@ -20,10 +20,13 @@ class BolsasSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Column(
-          children: bolsas
-              .map((bolsa) => BolsaCard(bolsa: bolsa))
-              .toList(),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: bolsas
+                .map((bolsa) => BolsaCard(bolsa: bolsa))
+                .toList(),
+          ),
         ),
       ],
     );

@@ -5,7 +5,7 @@ import '../models/bolsa.dart';
 import '../widgets/moedas_section.dart';
 import '../widgets/bolsas_section.dart';
 import '../widgets/loading_widget.dart';
-import '../widgets/custom_error_widget.dart'; // Importação atualizada
+import '../widgets/custom_error_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   final ApiService apiService;
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return const LoadingWidget();
           }
           if (snapshot.hasError) {
-            return CustomErrorWidget(message: snapshot.error.toString()); // Uso atualizado
+            return CustomErrorWidget(message: snapshot.error.toString());
           }
 
           final cotacoes = snapshot.data!['cotacoes'] as List<Cotacao>;
