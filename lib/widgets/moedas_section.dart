@@ -10,7 +10,6 @@ class MoedasSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Encontra a cotação do dolar
     final dolar = cotacoes.firstWhere(
       (cotacao) => cotacao.codigo == 'USD',
       orElse: () => Cotacao(
@@ -22,22 +21,29 @@ class MoedasSection extends StatelessWidget {
       ),
     );
 
-    // Filtra as outras moedas
     final outrasMoedas = cotacoes.where((cotacao) => cotacao.codigo != 'USD').toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // const Text(
+        //   'Cotações de Moedas',
+        //   style: TextStyle(
+        //     fontSize: 24,
+        //     fontWeight: FontWeight.bold,
+        //   ),
+        // ),
+        const SizedBox(height: 8),
+        DolarCard(dolar: dolar), 
+        const SizedBox(height: 20),
         const Text(
-          'Cotações de Moedas',
+          'Outras Moedas',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
-        DolarCard(dolar: dolar), 
-        const SizedBox(height: 20),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(

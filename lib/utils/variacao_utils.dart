@@ -17,7 +17,7 @@ class VariacaoUtils {
     } else {
       return {
         'color': Colors.red, 
-        'symbol': '-',
+        'symbol': '',
       };
     }
   }
